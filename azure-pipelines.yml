@@ -51,11 +51,11 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: $(filepath)
+           workingDirectory: '$(filepath)'
            backendServiceArm: 'infra_conn'
            backendAzureRmStorageAccountName: 'vinodstoragemaina'
            backendAzureRmContainerName: 'container22'
-           backendAzureRmKey: $(state_file_name)
+           backendAzureRmKey: '$(state_file_name)'
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
