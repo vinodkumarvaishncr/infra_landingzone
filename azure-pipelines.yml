@@ -11,7 +11,7 @@ stages:
   - stage: "Stage1_download_init_validate"
     jobs:
       - job: infra_install
-        displayName : "latrw"
+        displayName : "infra_install"
         steps:
         - task: TerraformInstaller@1
           inputs:
@@ -21,6 +21,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
@@ -30,6 +31,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'validate'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
 
   -  stage: "stage2_plan"
      dependsOn: "Stage1_download_init_validate"
@@ -44,6 +46,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
            backendServiceArm: 'infra_conn'
            backendAzureRmStorageAccountName: 'vinodstoragemaina'
            backendAzureRmContainerName: 'container22'
@@ -52,6 +55,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'plan'
+           workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
            environmentServiceNameAzureRM: 'infra_conn'
 
   - stage: "tflint_comm"
@@ -111,6 +115,7 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
+            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
