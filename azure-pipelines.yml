@@ -6,6 +6,9 @@ pool:
 
 variables:
 - group: global_variable   # contains INFRACOST_API_KEY secret variable
+- name: "STATEFILE"
+  value : "vinodkey22.tfstate"
+
  
 stages:
   - stage: "Stage1_download_init_validate"
@@ -25,7 +28,7 @@ stages:
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: 'vinodkey2.tfstate'
+            backendAzureRmKey: $(STATEFILE)
 
         - task: TerraformTask@5
           inputs:
@@ -50,7 +53,7 @@ stages:
            backendServiceArm: 'infra_conn'
            backendAzureRmStorageAccountName: 'vinodstoragemaina'
            backendAzureRmContainerName: 'container22'
-           backendAzureRmKey: 'vinodkey.tfstate'
+           backendAzureRmKey: $(STATEFILE)
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
@@ -119,7 +122,7 @@ stages:
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: 'vinodkey.tfstate'
+            backendAzureRmKey: $(STATEFILE)
         
         - task: PowerShell@2
           inputs:
@@ -150,7 +153,7 @@ stages:
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: 'vinodkey.tfstate'
+            backendAzureRmKey: $(STATEFILE)
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
