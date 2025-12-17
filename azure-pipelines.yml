@@ -60,7 +60,7 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'plan'
-           workingDirectory: $(filepath)
+           workingDirectory: '$(filepath)'
            environmentServiceNameAzureRM: 'infra_conn'
 
   - stage: "tflint_comm"
