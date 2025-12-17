@@ -11,7 +11,6 @@ variables:
 - name: filepath
   value: $(System.DefaultWorkingDirectory)/dev
 
- 
 stages:
   - stage: "Stage1_download_init_validate"
     jobs:
@@ -21,6 +20,14 @@ stages:
         - task: TerraformInstaller@1
           inputs:
             terraformVersion: 'latest'
+            
+        - template: templates/terraform-init.yml
+          parameters:
+            workingDirectory: $(filepath)
+            backendServiceArm: infra_conn
+            storageAccountName: vinodstoragemaina
+            containerName: container22
+            stateFileKey: $(state_file_name)
        
         - task: TerraformTask@5
           inputs:
