@@ -6,8 +6,10 @@ pool:
 
 variables:
 - group: global_variable   # contains INFRACOST_API_KEY secret variable
-- name: "STATEFILE"
-  value : "vinodkey22.tfstate"
+- name: state_file_name
+  value: vinodinfra.tfstate
+- name: filepath
+  value: $(System.DefaultWorkingDirectory)/dev
 
  
 stages:
@@ -24,17 +26,17 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            workingDirectory: $(filepath)
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: $(STATEFILE)
+            backendAzureRmKey: $(state_file_name)
 
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
             command: 'validate'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            workingDirectory: $(filepath)
 
   -  stage: "stage2_plan"
      dependsOn: "Stage1_download_init_validate"
@@ -49,16 +51,16 @@ stages:
          inputs:
            provider: 'azurerm'
            command: 'init'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+           workingDirectory: $(filepath)
            backendServiceArm: 'infra_conn'
            backendAzureRmStorageAccountName: 'vinodstoragemaina'
            backendAzureRmContainerName: 'container22'
-           backendAzureRmKey: $(STATEFILE)
+           backendAzureRmKey: $(state_file_name)
        - task: TerraformTask@5
          inputs:
            provider: 'azurerm'
            command: 'plan'
-           workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+           workingDirectory: $(filepath)
            environmentServiceNameAzureRM: 'infra_conn'
 
   - stage: "tflint_comm"
@@ -118,11 +120,11 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            workingDirectory: $(filepath)
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: $(STATEFILE)
+            backendAzureRmKey: $(state_file_name)
         
         - task: PowerShell@2
           inputs:
@@ -149,16 +151,16 @@ stages:
           inputs:
             provider: 'azurerm'
             command: 'init'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            workingDirectory: $(filepath)
             backendServiceArm: 'infra_conn'
             backendAzureRmStorageAccountName: 'vinodstoragemaina'
             backendAzureRmContainerName: 'container22'
-            backendAzureRmKey: $(STATEFILE)
+            backendAzureRmKey: $(state_file_name)
         - task: TerraformTask@5
           inputs:
             provider: 'azurerm'
             command: 'apply'
-            workingDirectory: '$(System.DefaultWorkingDirectory)/dev'
+            workingDirectory: $(filepath)
             commandOptions: '-auto-approve'
             environmentServiceNameAzureRM: 'infra_conn'
  
