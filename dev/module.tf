@@ -16,13 +16,13 @@ module "kv" {
   source = "../custom/azurerm_keyvault"
   kvs = var.kvs
 }
-
+/*
 module "kv_secret" {
   depends_on = [module.rg,module.kv]
   source = "../custom/azurerm_secret"
   kv_secrets = var.kv_secrets
 }
-
+*/
 module "pip" {
   depends_on = [module.rg]
   source = "../custom/azurerm_publicip"
