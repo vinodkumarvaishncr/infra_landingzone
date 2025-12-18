@@ -63,8 +63,9 @@ stages:
            command: 'plan'
            workingDirectory: '$(filepath)'
            environmentServiceNameAzureRM: 'infra_conn'
-           commandOptions: >
-            -var-file=terraform.tfvars
+           commandOptions: "-var-file=terraform.tfvars"
+         env:
+              TF_INPUT: false
 
   # - stage: "tflint_comm"
   #   dependsOn: "stage2_plan"
