@@ -247,7 +247,7 @@ vms = {
 }
 
 # key vault
-
+/*
 kvs = {
   kv1 = {
     name                        = "vinodkvaultnew"
@@ -281,12 +281,9 @@ kv_secrets = {
     key_vault_name         = "vinodkvaultnew"
     resource_group_name    = "vinod-rg11"
   }
-
  
-
-  
 }
-
+*/
 sql_server_list = {
   "server1" = {
     name                         = "vinod-sqlserver"

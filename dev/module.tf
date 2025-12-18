@@ -10,7 +10,7 @@ module "storageacc" {
   storage_account_list =var.storage_account_list
 }
 */
-
+/*
 module "kv" {
   depends_on = [module.rg]
   source = "../custom/azurerm_keyvault"
@@ -22,7 +22,7 @@ module "kv_secret" {
   source = "../custom/azurerm_secret"
   kv_secrets = var.kv_secrets
 }
-
+*/
 module "pip" {
   depends_on = [module.rg]
   source = "../custom/azurerm_publicip"
