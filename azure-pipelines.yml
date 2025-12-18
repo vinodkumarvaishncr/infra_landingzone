@@ -10,6 +10,8 @@ variables:
   value: vinodinfra.tfstate
 - name: filepath
   value: $(System.DefaultWorkingDirectory)/dev
+- name: TF_INPUT
+  value: false
 
 stages:
   - stage: "Stage1_download_init_validate"
@@ -61,6 +63,8 @@ stages:
            command: 'plan'
            workingDirectory: '$(filepath)'
            environmentServiceNameAzureRM: 'infra_conn'
+           commandOptions: >
+            -var-file=terraform.tfvars
 
   # - stage: "tflint_comm"
   #   dependsOn: "stage2_plan"
