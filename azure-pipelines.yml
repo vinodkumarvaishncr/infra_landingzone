@@ -106,60 +106,60 @@ stages:
               
               trivy config .
          
-  - stage: "infraCost"
-    dependsOn: "stage2_plan"
-    jobs:
-      - job: "cost_infra"
-        displayName: "costtt"
-        steps:
-        - task: TerraformInstaller@1
-          inputs:
-            terraformVersion: 'latest'
+  # - stage: "infraCost"
+  #   dependsOn: "stage2_plan"
+  #   jobs:
+  #     - job: "cost_infra"
+  #       displayName: "costtt"
+  #       steps:
+  #       - task: TerraformInstaller@1
+  #         inputs:
+  #           terraformVersion: 'latest'
         
-        - template: templates/terraform-init.yml
-          parameters:
-            workingDirectory: $(filepath)
-            backendServiceArm: infra_conn
-            storageAccountName: vinodstoragemaina
-            containerName: container22
-            stateFileKey: $(state_file_name)
+  #       - template: templates/terraform-init.yml
+  #         parameters:
+  #           workingDirectory: $(filepath)
+  #           backendServiceArm: infra_conn
+  #           storageAccountName: vinodstoragemaina
+  #           containerName: container22
+  #           stateFileKey: $(state_file_name)
         
-        - task: PowerShell@2
-          inputs:
-            targetType: 'inline'
-            script: |
-              Write-Host "Setting API key"
-               $env:INFRACOST_API_KEY = "$(INFRACOST_API_KEY)"
+  #       - task: PowerShell@2
+  #         inputs:
+  #           targetType: 'inline'
+  #           script: |
+  #             Write-Host "Setting API key"
+  #              $env:INFRACOST_API_KEY = "$(INFRACOST_API_KEY)"
               
-              Write-Host "API key loaded? ->" $env:INFRACOST_API_KEY
+  #             Write-Host "API key loaded? ->" $env:INFRACOST_API_KEY
               
-               infracost breakdown --path=.
-            workingDirectory: '$(System.DefaultWorkingDirectory)'
+  #              infracost breakdown --path=.
+  #           workingDirectory: '$(System.DefaultWorkingDirectory)'
 
-  - stage: "stage3_apply"
-    dependsOn: "stage2_plan"
-    jobs:
-      - job: "terrafomr_apply"
-        displayName: "apply"
-        steps:
-        - task: TerraformInstaller@1
-          inputs:
-            terraformVersion: 'latest' 
+  # - stage: "stage3_apply"
+  #   dependsOn: "stage2_plan"
+  #   jobs:
+  #     - job: "terrafomr_apply"
+  #       displayName: "apply"
+  #       steps:
+  #       - task: TerraformInstaller@1
+  #         inputs:
+  #           terraformVersion: 'latest' 
 
         
-        - template: templates/terraform-init.yml
-          parameters:
-            workingDirectory: $(filepath)
-            backendServiceArm: infra_conn
-            storageAccountName: vinodstoragemaina
-            containerName: container22
-            stateFileKey: $(state_file_name)
+  #       - template: templates/terraform-init.yml
+  #         parameters:
+  #           workingDirectory: $(filepath)
+  #           backendServiceArm: infra_conn
+  #           storageAccountName: vinodstoragemaina
+  #           containerName: container22
+  #           stateFileKey: $(state_file_name)
      
-        - task: TerraformTask@5
-          inputs:
-            provider: 'azurerm'
-            command: 'apply'
-            workingDirectory: $(filepath)
-            commandOptions: '-auto-approve'
-            environmentServiceNameAzureRM: 'infra_conn'
+  #       - task: TerraformTask@5
+  #         inputs:
+  #           provider: 'azurerm'
+  #           command: 'apply'
+  #           workingDirectory: $(filepath)
+  #           commandOptions: '-auto-approve'
+  #           environmentServiceNameAzureRM: 'infra_conn'
  
