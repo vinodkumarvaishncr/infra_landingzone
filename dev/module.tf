@@ -10,13 +10,13 @@ module "storageacc" {
   storage_account_list =var.storage_account_list
 }
 */
-
+/*
 module "kv" {
   depends_on = [module.rg]
   source = "../custom/azurerm_keyvault"
   kvs = var.kvs
 }
-/*
+
 module "kv_secret" {
   depends_on = [module.rg,module.kv]
   source = "../custom/azurerm_secret"

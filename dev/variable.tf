@@ -159,7 +159,7 @@ variable "pip_info" {
     }
   )) 
 }
-
+/*
 variable "kvs" {
   type = map(object({
     name                            = string
@@ -184,7 +184,7 @@ variable "kvs" {
     })))
   }))
 }
-/*
+
  variable "kv_secrets" {
     type = map(object({
   key_vault_secret_name         = string
