@@ -51,7 +51,7 @@ stages:
             targetType: 'inline'
             script: |
               # Write your tflint commands here.
-              cd infra
+              cd dev
               tflint --recursive
 
      
@@ -64,7 +64,7 @@ stages:
             targetType: 'inline'
             script: |
               # Write your  tfsec commands here.
-              cd infra
+              cd dev
               tfsec
 
      
@@ -76,7 +76,7 @@ stages:
             targetType: 'inline'
             script: |
               # Write your trivy commands here.
-              cd infra
+              cd dev
               trivy config .
   
           
